@@ -35,6 +35,9 @@ flag2 = 0
 
 crop_img = 255 * np.ones(shape=[224, 224, 3], dtype=np.uint8)
 
+model = ResNet50(weights='imagenet')
+
+
 if flag == 1:
     while True:
         # Read the frame
@@ -69,7 +72,7 @@ if flag == 1:
         # time.sleep(0.2)
         # Convert to grayscale
 
-        model = ResNet50(weights='imagenet')
+
 
         width = 224
         height = 224
