@@ -11,7 +11,7 @@ import numpy as np
 from firebase import firebase
 import time
 
-# firebase = firebase.FirebaseApplication('https://test-realtime-3b1ec.firebaseio.com/', None)
+firebase = firebase.FirebaseApplication('https://test-realtime-3b1ec.firebaseio.com/', None)
 
 namecam = input("enter  name: ")
 latitude = input("enter latitude: ")
@@ -19,7 +19,7 @@ longitude = input("enter longitude: ")
 
 # cap = cv2.VideoCapture(0)
 
-# cap = cv2.VideoCapture("4.mp4")
+# cap = cv2.VideoCapture("48.mp4")
 
 # if cap is None or not cap.isOpened():
 #   print('unable to open camera 1')
@@ -42,12 +42,18 @@ detection_model = model_builder.build(model_config=configs['model'], is_training
 
 # Restore checkpoint
 ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
-ckpt.restore(os.path.join(CHECKPOINT_PATH, 'ckpt-9')).expect_partial()
+ckpt.restore(os.path.join(CHECKPOINT_PATH, 'ckpt-11')).expect_partial()
 
 
 def dem(score):
-    print(score)
-
+    score2 = score[0]
+    print(score2)
+    if score2 > 0.5:
+        print("sent")
+        data = {'time': time.ctime(), 'name': namecam, 'latitude': latitude, 'longitude': longitude}
+        result = firebase.post('test-realtime-3b1ec', data)
+        time.sleep(0.7)
+                
 
 @tf.function
 def detect_fn(image):
@@ -59,13 +65,15 @@ def detect_fn(image):
 
 category_index = label_map_util.create_category_index_from_labelmap(ANNOTATION_PATH + '/label_map.pbtxt')
 
-cap = cv2.VideoCapture("48.mp4")
+cap = cv2.VideoCapture("t.mp4")
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 while True:
     ret, frame = cap.read()
     # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # crr = frame
+    # frame = (255-frame)
     image_np = np.array(frame)
 
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
@@ -82,7 +90,7 @@ while True:
 
     label_id_offset = 1
     image_np_with_detections = image_np.copy()
-    dem(image_np_with_detections)
+    dem(detections['detection_scores'])
 
     viz_utils.visualize_boxes_and_labels_on_image_array(
         image_np_with_detections,
@@ -96,6 +104,8 @@ while True:
         agnostic_mode=False)
 
     cv2.imshow('object detection', cv2.resize(image_np_with_detections, (800, 600)))
+    # cv2.imshow('s',frame)
+    # cv2.imshow('s',crr)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         cap.release()
