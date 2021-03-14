@@ -10,6 +10,7 @@ import cv2
 import numpy as np
 from firebase import firebase
 import time
+from checklight import checklightcondition
 
 firebase = firebase.FirebaseApplication('https://test-realtime-3b1ec.firebaseio.com/', None)
 
@@ -48,12 +49,12 @@ ckpt.restore(os.path.join(CHECKPOINT_PATH, 'ckpt-11')).expect_partial()
 def dem(score):
     score2 = score[0]
     print(score2)
-    if score2 > 0.5:
+    if score2 > 0.6:
         print("sent")
-        data = {'time': time.ctime(), 'name': namecam, 'latitude': latitude, 'longitude': longitude}
-        result = firebase.post('test-realtime-3b1ec', data)
-        time.sleep(0.7)
-                
+        # data = {'time': time.ctime(), 'name': namecam, 'latitude': latitude, 'longitude': longitude}
+        # result = firebase.post('test-realtime-3b1ec', data)
+        # time.sleep(0.8)
+
 
 @tf.function
 def detect_fn(image):
@@ -65,15 +66,25 @@ def detect_fn(image):
 
 category_index = label_map_util.create_category_index_from_labelmap(ANNOTATION_PATH + '/label_map.pbtxt')
 
-cap = cv2.VideoCapture("t.mp4")
-width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+light1 = checklightcondition()
+
+if light1 == 1:
+    cap = cv2.VideoCapture("t.mp4")
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+if light1 == 0:
+    cap = cv2.VideoCapture("rt.mp4")
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 while True:
     ret, frame = cap.read()
     # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     # crr = frame
     # frame = (255-frame)
+    if light1 == 0:
+        frame = (255 - frame)
+
     image_np = np.array(frame)
 
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
