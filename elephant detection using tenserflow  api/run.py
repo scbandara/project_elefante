@@ -1,4 +1,4 @@
-import os 
+import os
 import tensorflow as tf
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as viz_utils
@@ -11,9 +11,15 @@ import numpy as np
 from firebase import firebase
 import time
 from checklight import checklightcondition
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # firebase = firebase.FirebaseApplication('https://test-realtime-3b1ec.firebaseio.com/', None)
-firebase = firebase.FirebaseApplication('https://elefante-d2d6a-default-rtdb.firebaseio.com/', None)
+# firebase = firebase.FirebaseApplication('https://elefante-d2d6a-default-rtdb.firebaseio.com/', None)
+# initialize sdk
+# initialize sdk
+cred = credentials.Certificate("ply-project8-firebase-adminsdk-3swxk-12b9c2910e.json")
+firebase_admin.initialize_app(cred)
 
 
 namecam = input("enter  name: ")
@@ -53,9 +59,15 @@ def dem(score):
     print(score2)
     if score2 > 0.6:
         print("sent")
-        #data = {'time': time.ctime(), 'name': namecam, 'latitude': latitude, 'longitude': longitude}
-        #result = firebase.post('test-realtime-3b1ec', data)
-        #time.sleep(0.5)
+        # initialize firestore instance
+        firestore_db = firestore.client()
+        # add data
+        firestore_db.collection(u'detections').add(
+            {'time': time.ctime(), 'name': namecam, 'latitude': latitude, 'longitude': longitude})
+
+        # data = {'time': time.ctime(), 'name': namecam, 'latitude': latitude, 'longitude': longitude}
+        # result = firebase.post('test-realtime-3b1ec', data)
+        # time.sleep(0.5)
 
 
 @tf.function
@@ -72,7 +84,7 @@ light1 = checklightcondition()
 
 if light1 == 1:
     cap = cv2.VideoCapture("t.mp4")
-    #cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(0)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 if light1 == 0:
