@@ -1,0 +1,44 @@
+body{
+    overflow-x:hidden;
+    font-family: 'Lato', sans-serif;
+    background-image: url(img/1212.jpg);
+  }
+  .caption{
+    width: 100%;
+    max-width: 100%;
+    position: absolute;
+
+    z-index: 1;
+    color: rgb(10, 10, 10);
+  }
+  .caption h1{
+    font-size: 60.8px;
+    font-weight: 700;
+    text-shadow: 1.6px 1.6px 12.8px rgb(255, 255, 255);
+    letter-spacing: 9px;
+  }  
+
+.list-item{
+    background: rgb(156, 156, 156);
+    padding: 20px;
+    margin: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    margin-bottom: 10px;
+}
+.list-item h3{
+    background: #fff;
+    padding: 20px;
+    margin: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    margin-bottom: 10px;
+}
+.list-item p{
+    background: #fff;
+    padding: 20px;
+    margin: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    margin-bottom: 10px;
+}
