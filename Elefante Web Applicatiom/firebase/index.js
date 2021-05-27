@@ -6,7 +6,7 @@ var db = firebase.firestore();
 // read documents from firebase
 const tbody1 =document.querySelector("#tbody1");
 
-db.collection("Detections").onSnapshot((querySnapshot) => {
+db.collection("detections").onSnapshot((querySnapshot) => {
     querySnapshot.forEach((doc) => {
 
         // var stdNo=0;
