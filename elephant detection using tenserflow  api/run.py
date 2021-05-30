@@ -18,7 +18,7 @@ from firebase_admin import credentials, firestore
 # firebase = firebase.FirebaseApplication('https://elefante-d2d6a-default-rtdb.firebaseio.com/', None)
 # initialize sdk
 # initialize sdk
-cred = credentials.Certificate("ply-project8-firebase-adminsdk-3swxk-12b9c2910e.json")
+cred = credentials.Certificate("flutterfiresamples-firebase-adminsdk-135oz-cbd1f9e298.json")
 firebase_admin.initialize_app(cred)
 
 
@@ -83,7 +83,7 @@ category_index = label_map_util.create_category_index_from_labelmap(ANNOTATION_P
 light1 = checklightcondition()
 
 if light1 == 1:
-    cap = cv2.VideoCapture("t.mp4")
+    cap = cv2.VideoCapture("tee.mp4")
     # cap = cv2.VideoCapture(0)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
