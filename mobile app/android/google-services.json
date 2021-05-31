@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "960274836875",
+    "project_id": "flutterfiresamples",
+    "storage_bucket": "flutterfiresamples.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960274836875:android:4cbc3b9f8cde265d7ed38e",
+        "android_client_info": {
+          "package_name": "com.souvikbiswas.flutterfire_samples"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960274836875-k6imn6vmahviue4firvbvbke39v1lacj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiNAMk_5s_1n77ayOxKAG7O44gQwlvAqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960274836875-k6imn6vmahviue4firvbvbke39v1lacj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "960274836875-dnbk2fdq0au0aetshbn418psj30o461b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.souvikbiswas.flutterfireSamples"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
